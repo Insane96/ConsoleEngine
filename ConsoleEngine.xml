@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ConsoleEngine</name>
+    </assembly>
+    <members>
+        <member name="T:ConsoleEngine.Engine">
+            <summary>
+            Main Engine Class
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Engine.Init(System.Int32,System.Int32,System.Boolean,System.String)">
+            <summary>
+            Initializes the Renderer by creating the Window Buffer, setting the window Width, Height and Title and Show/Hide the Cursor.
+            
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Engine.MainLoop">
+            <summary>
+            Needs to be called in the Main() loop
+            Takes care of updating Input, Time, Renderer, Removal and Addition of Gameobjects other than their Update and Draw
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Engine.AddGameObject(ConsoleEngine.GameObject)">
+            <summary>
+            Adds a GameObject to the list of GameObjects to update and draw. Names must be univocal
+            </summary>
+            <param name="gameObject"></param>
+        </member>
+        <member name="M:ConsoleEngine.Engine.RemoveGameObjectByName(System.String)">
+            <summary>
+            Removes a GameObject from the list of GameObjects to update and draw.
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:ConsoleEngine.Engine.RemoveGameObjectByObj(ConsoleEngine.GameObject)">
+            <summary>
+            
+            </summary>
+            <param name="gameObject"></param>
+        </member>
+        <member name="T:ConsoleEngine.GameObject">
+            <summary>
+            Main Game object class, every object in game should inherith from this class
+            </summary>
+        </member>
+        <member name="F:ConsoleEngine.GameObject.name">
+            <summary>
+            Game object name, must be univocal
+            </summary>
+        </member>
+        <member name="F:ConsoleEngine.GameObject.pos">
+            <summary>
+            Game Object Position
+            </summary>
+        </member>
+        <member name="F:ConsoleEngine.GameObject.size">
+            <summary>
+            Game Object size
+            </summary>
+        </member>
+        <member name="F:ConsoleEngine.GameObject.shape">
+            <summary>
+            The shape that's usually drawn on screen
+            </summary>
+        </member>
+        <member name="P:ConsoleEngine.GameObject.HasCollision">
+            <summary>
+            Returns true if GameObject size is bigger than 0,0 (and 0,1 or 1,0)
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.GameObject.#ctor(System.String)">
+            <summary>
+            Creates a new gameObject with set name pos to 0,0 and size 0,0 and with empty shape
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.GameObject.#ctor(System.String,ConsoleEngine.Vector2)">
+            <summary>
+            Creates a new gameObject with set name and pos and size 0,0 and with empty shape
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.GameObject.#ctor(System.String,ConsoleEngine.Vector2,ConsoleEngine.Vector2)">
+            <summary>
+            Creates a new gameObject with set name, pos and size with empty shape
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.GameObject.#ctor(System.String,ConsoleEngine.Vector2,ConsoleEngine.Vector2,System.String[])">
+            <summary>
+            Creates a new gameObject with name, pos, size, shape and trueCollision
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.GameObject.Update">
+            <summary>
+            Called every cycle to update the e.g. position, etc. 
+            By default it does nothing
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.GameObject.Draw">
+            <summary>
+            Called every cycle to draw this GameObject on the screen. By default it does nothing
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.GameObject.OnCollision(ConsoleEngine.GameObject)">
+            <summary>
+            Called everytime a GameObject (other) collides with this one
+            </summary>
+            <param name="other"></param>
+        </member>
+        <member name="M:ConsoleEngine.GameObject.GetName">
+            <summary>
+            Returns GameObject name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleEngine.GameObject.ToString">
+            <summary>
+            Returns a string showing the name of the gameobject
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Input.ClearKeyBuffer">
+            <summary>
+            Removes all the stacked key inputs every frame, instead of reading them later. Mostly useful on low FPS
+            </summary>
+        </member>
+        <member name="T:ConsoleEngine.Rand">
+            <summary>
+            Helper class used to generate pseudo random numbers
+            </summary>
+        </member>
+        <member name="F:ConsoleEngine.Rand.random">
+            <summary>
+            Random instance used to generate random numbers
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Rand.GetRandomInt(System.Int32,System.Int32)">
+            <summary>
+            Returns a random int number between min (inclusive) and max (exclusive). If max is smaller than min then min is returned
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleEngine.Rand.GetRandomFloat(System.Single,System.Single)">
+            <summary>
+            Returns a random float number between min (inclusive) and max (exclusive). If max is smaller than min then min is returned
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleEngine.Rand.GetRandomDouble(System.Single,System.Single)">
+            <summary>
+            Returns a random double number between min (inclusive) and max (exclusive). If max is smaller than min then min is returned
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ConsoleEngine.Renderer">
+            <summary>
+            Renderer than prints 
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Renderer.Init(System.Int32,System.Int32,System.Boolean,System.String)">
+            <summary>
+            Initializes the Renderer by creating the Window Buffer, setting the window Width, Height and Title and Show/Hide the Cursor.
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Renderer.Put(System.String,ConsoleEngine.Vector2,System.ConsoleColor,System.ConsoleColor)">
+            <summary>
+            Puts the string into the window buffer by cycling every character at the selected position
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Renderer.Put(System.Char,ConsoleEngine.Vector2,System.ConsoleColor,System.ConsoleColor)">
+            <summary>
+            Puts the character into the window buffer at the selected position
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Renderer.Draw">
+            <summary>
+            Called by the Engine draws the window buffer
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Renderer.GetWindowWidth">
+            <summary>
+            Returns the Window Width
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Renderer.GetWindowHeight">
+            <summary>
+            Returns the Window Height
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Renderer.GetWindowSize">
+            <summary>
+            Returns the Window Width and Height as Vector2
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleEngine.Renderer.Pixel.Set(System.Char,System.ConsoleColor,System.ConsoleColor)">
+            <summary>
+            Sets the pixel to the passed arguments, passing no arguments will reset the Pixel to nothing, black background and white text
+            </summary>
+            <param name="c"></param>
+            <param name="color"></param>
+            <param name="backgroundColor"></param>
+        </member>
+        <member name="P:ConsoleEngine.Time.DeltaTime">
+            <summary>
+            Time passed since last frame
+            </summary>
+        </member>
+        <member name="T:ConsoleEngine.Utils">
+            <summary>
+            Utils class with random things
+            </summary>
+        </member>
+        <member name="T:ConsoleEngine.Utils.Directions">
+            <summary>
+            Basic directions list
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.Utils.GetArrayPosition(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns the position in an array given a matrix x and y position and matrix width
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleEngine.Utils.GetArrayPosition(ConsoleEngine.Vector2,System.Int32)">
+            <summary>
+            Returns the position in an array given a matrix x and y position as Vector2 and matrix width
+            </summary>
+            <param name="pos"></param>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleEngine.Utils.GetMatrixPosition(System.Int32,System.Int32)">
+            <summary>
+            Returns the x and y position on a matrix given the array position and matrix width
+            </summary>
+            <param name="l"></param>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ConsoleEngine.XML">
+            <summary>
+            Helper Class used to save / load data from file
+            </summary>
+        </member>
+        <member name="M:ConsoleEngine.XML.Serialize(System.Type,System.Object,System.String)">
+            <summary>
+            Writes an object into the fileName into the given path
+            </summary>
+            <param name="uri">String rappresenting the full path to the file</param>
+        </member>
+        <member name="M:ConsoleEngine.XML.Deserialize(System.Type,System.String)">
+            <summary>
+            Reads an object from the fileName into the given path
+            </summary>
+            <param name="uri">String rappresenting the full path to the file</param>
+        </member>
+    </members>
+</doc>
