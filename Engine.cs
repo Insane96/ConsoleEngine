@@ -27,11 +27,10 @@ namespace ConsoleEngine
 
         /// <summary>
         /// Needs to be called in the Main() loop
-        /// Takes care of updating Input, Time, Renderer, Removal and Addition of Gameobjects other than their Update and Draw
+        /// Takes care of updating Time, Renderer, Removal and Addition of GameObjects other than their Update and Draw
         /// </summary>
         public static void MainLoop()
         {
-            Input.UpdateKeyPress();
             Time.Update();
 
             AddQueuedGameObjects();
