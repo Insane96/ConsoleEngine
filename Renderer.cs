@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace ConsoleEngine
 {
@@ -22,10 +19,10 @@ namespace ConsoleEngine
         /// <summary>
         /// Initializes the Renderer by creating the Window Buffer, setting the window Width, Height and Title and Show/Hide the Cursor.
         /// </summary>
-        public static void Init(int width, int height, bool showCursor, string title)
+        public static void Init(int width, int height, string title)
         {
             if (hasAlreadyBeenInit)
-                throw new Exception("[Warning] Renderer has already been Initialized");
+                throw new Exception("Renderer has already been Initialized");
 
             WINDOW_WIDTH = width;
             WINDOW_HEIGHT = height;
@@ -33,7 +30,7 @@ namespace ConsoleEngine
             drawnBuffer = new Pixel[WINDOW_WIDTH * WINDOW_HEIGHT];
 
             Console.SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-            Console.CursorVisible = showCursor;
+            Console.CursorVisible = false;
 
             for (int i = 0; i < windowBuffer.Length; i++)
             {
@@ -47,24 +44,40 @@ namespace ConsoleEngine
         /// <summary>
         /// Puts the string into the window buffer by cycling every character at the selected position
         /// </summary>
-        public static void Put(string text, Vector2 pos, ConsoleColor color = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
+        public static void Put(string text, Vector2 pos, Color color, Color backgroundColor)
         {
             for (int i = 0; i < text.Length; i++)
             {
                 Put(text[i], Utils.GetMatrixPosition(Utils.GetArrayPosition(pos, WINDOW_WIDTH) + i, WINDOW_WIDTH), color, backgroundColor);
             }
         }
+        public static void Put(string text, Vector2 pos, Color color)
+        {
+            Put(text, pos, color, Color.Black);
+        }
+        public static void Put(string text, Vector2 pos)
+        {
+            Put(text, pos, Color.White, Color.Black);
+        }
 
         /// <summary>
         /// Puts the character into the window buffer at the selected position
         /// </summary>
-        public static void Put(char text, Vector2 pos, ConsoleColor color = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
+        public static void Put(char text, Vector2 pos, Color color, Color backgroundColor)
         {
             if (pos.x < 0 || pos.x >= WINDOW_WIDTH || pos.y < 0 || pos.y >= WINDOW_HEIGHT)
                 return;
 
             int a = Utils.GetArrayPosition(pos, WINDOW_WIDTH);
             windowBuffer[a].Set(text, color, backgroundColor);
+        }
+        public static void Put(char text, Vector2 pos, Color color)
+        {
+            Put(text, pos, color, Color.Black);
+        }
+        public static void Put(char text, Vector2 pos)
+        {
+            Put(text, pos, Color.White, Color.Black);
         }
 
         /// <summary>
@@ -119,19 +132,19 @@ namespace ConsoleEngine
         private class Pixel
         {
             char c;
-            ConsoleColor color;
-            ConsoleColor backgroundColor;
+            Color textColor;
+            Color backgroundColor;
 
             public Pixel()
             {
                 this.c = ' ';
-                this.color = ConsoleColor.White;
-                this.backgroundColor = ConsoleColor.Black;
+                this.textColor = Color.White;
+                this.backgroundColor = Color.Black;
             }
-            public Pixel(char c, ConsoleColor color, ConsoleColor backgroundColor)
+            public Pixel(char c, Color textColor, Color backgroundColor)
             {
                 this.c = c;
-                this.color = color;
+                this.textColor = textColor;
                 this.backgroundColor = backgroundColor;
             }
 
@@ -139,41 +152,48 @@ namespace ConsoleEngine
             /// Sets the pixel to the passed arguments, passing no arguments will reset the Pixel to nothing, black background and white text
             /// </summary>
             /// <param name="c"></param>
-            /// <param name="color"></param>
+            /// <param name="textColor"></param>
             /// <param name="backgroundColor"></param>
-            public void Set(char c = ' ', ConsoleColor color = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
+            public void Set(char c, Color textColor, Color backgroundColor)
             {
                 this.c = c;
-                this.color = color;
+                this.textColor = textColor;
                 this.backgroundColor = backgroundColor;
+            }
+            public void Set(char c, Color textColor)
+            {
+                Set(c, textColor, Color.Black);
+            }
+            public void Set(char c = ' ')
+            {
+                Set(c, Color.White, Color.Black);
             }
 
             public char GetCharacter()
             {
                 return this.c;
             }
-            public ConsoleColor GetColor()
+            public Color GetColor()
             {
-                return this.color;
+                return this.textColor;
             }
-            public ConsoleColor GetBackgroundColor()
+            public Color GetBackgroundColor()
             {
                 return this.backgroundColor;
             }
 
             public override string ToString()
             {
-                return String.Format("Pixel[char: {0}, color: {1}, bColor: {2}]", c, color, backgroundColor);
+                return $"Pixel[char: {c}, textColor: {textColor}, bColor: {backgroundColor}]";
             }
 
             public override bool Equals(object obj)
             {
-                if (obj is Pixel)
+                if (obj is Pixel p)
                 {
-                    Pixel p = (Pixel)obj;
                     return
                         this.c.Equals(p.c) &&
-                        this.color.Equals(p.color) &&
+                        this.textColor.Equals(p.textColor) &&
                         this.backgroundColor.Equals(p.backgroundColor);
                 }
                 return false;

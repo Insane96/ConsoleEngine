@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleEngine
 {
@@ -134,12 +130,43 @@ namespace ConsoleEngine
 
         public static Vector2 operator /(Vector2 v1, Vector2 v2)
         {
+            if (v2.x == 0f || v2.y == 0f)
+                throw new DivideByZeroException("Tried to divide Vector2 by another Vector2 that has a zero");
             return new Vector2(v1.x / v2.x, v1.y / v2.y);
         }
 
         public static Vector2 operator /(Vector2 v1, float f)
         {
+            if (f == 0f)
+                throw new DivideByZeroException("Tried to divide Vector2 by zero");
             return new Vector2(v1.x / f, v1.y / f);
+        }
+
+        /// <summary>
+        /// Returns a clone of the current Vector2
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 Clone()
+        {
+            return new Vector2(this.x, this.y);
+        }
+
+        public float Length
+        {
+            get { return (float) Math.Sqrt(this.x * this.x + this.y * this.y); }
+        }
+
+        /// <summary>
+        /// Returns a new Vector2 normalized
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 Normalize()
+        {
+            if (this.Length == 0f)
+                return Vector2.Zero;
+            float x = this.x / this.Length;
+            float y = this.y / this.Length;
+            return new Vector2(x, y);
         }
     }
 }
