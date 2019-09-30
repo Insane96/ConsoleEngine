@@ -163,7 +163,7 @@ namespace ConsoleEngine
 
             public override string ToString()
             {
-                return String.Format("Pixel[char: {0}, textColor: {1}, backgrounColor: {2}]", c, textColor, backgroundColor);
+                return $"Pixel[char: {c}, textColor: {textColor}, backgrounColor: {backgroundColor}]";
             }
 
             public override bool Equals(object obj)

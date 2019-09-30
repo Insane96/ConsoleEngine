@@ -83,7 +83,7 @@ namespace ConsoleEngine
 
         public override string ToString()
         {
-            return string.Format("Vector2[X: {0}, Y: {1}]", x, y);
+            return $"Vector2[X: {x}, Y: {y}]";
         }
 
         public override bool Equals(object obj)

@@ -95,7 +95,7 @@ namespace ConsoleEngine
         /// </summary>
         public override string ToString()
         {
-            return String.Format("GameObject[name: {0}]", name);
+            return $"GameObject[name: {name}]";
         }
     }
 }
