@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using Console = Colorful.Console;
 
@@ -51,7 +52,7 @@ namespace ConsoleEngine
                 Put(text[i], Utils.GetMatrixPosition(Utils.GetArrayPosition(pos, WINDOW_WIDTH) + i, WINDOW_WIDTH), color, backgroundColor);
             }
         }
-        public static void Put(string text, Vector2 pos, Color color)
+        public static void Put(string text, Vector2 pos, Color color, ConsoleColor backgroundColor)
         {
             Put(text, pos, color, Color.Black);
         }
@@ -63,21 +64,21 @@ namespace ConsoleEngine
         /// <summary>
         /// Puts the character into the window buffer at the selected position
         /// </summary>
-        public static void Put(char text, Vector2 pos, Color color, Color backgroundColor)
+        public static void Put(char character, Vector2 pos, Color color, Color backgroundColor)
         {
             if (pos.x < 0 || pos.x >= WINDOW_WIDTH || pos.y < 0 || pos.y >= WINDOW_HEIGHT)
                 return;
 
             int a = Utils.GetArrayPosition(pos, WINDOW_WIDTH);
-            windowBuffer[a].Set(text, color, backgroundColor);
+            windowBuffer[a].Set(character, color, backgroundColor);
         }
-        public static void Put(char text, Vector2 pos, Color color)
+        public static void Put(char character, Vector2 pos, Color color)
         {
-            Put(text, pos, color, Color.Black);
+            Put(character, pos, color, Color.Black);
         }
-        public static void Put(char text, Vector2 pos)
+        public static void Put(char character, Vector2 pos)
         {
-            Put(text, pos, Color.White, Color.Black);
+            Put(character, pos, Color.White, Color.Black);
         }
 
         /// <summary>
@@ -131,47 +132,44 @@ namespace ConsoleEngine
 
         private class Pixel
         {
-            char c;
+            char character;
             Color textColor;
             Color backgroundColor;
 
             public Pixel()
             {
-                this.c = ' ';
+                this.character = ' ';
                 this.textColor = Color.White;
                 this.backgroundColor = Color.Black;
             }
-            public Pixel(char c, Color textColor, Color backgroundColor)
+            public Pixel(char character, Color textColor, Color backgroundColor)
             {
-                this.c = c;
+                this.character = character;
                 this.textColor = textColor;
                 this.backgroundColor = backgroundColor;
             }
 
             /// <summary>
-            /// Sets the pixel to the passed arguments, passing no arguments will reset the Pixel to nothing, black background and white text
+            /// Sets the pixel to the passed arguments, passing no arguments will reset the Pixel to nothing, black background and white character
             /// </summary>
-            /// <param name="c"></param>
-            /// <param name="textColor"></param>
-            /// <param name="backgroundColor"></param>
-            public void Set(char c, Color textColor, Color backgroundColor)
+            public void Set(char character, Color textColor, Color backgroundColor)
             {
-                this.c = c;
+                this.character = character;
                 this.textColor = textColor;
                 this.backgroundColor = backgroundColor;
             }
-            public void Set(char c, Color textColor)
+            public void Set(char character, Color textColor)
             {
-                Set(c, textColor, Color.Black);
+                Set(character, textColor, Color.Black);
             }
-            public void Set(char c = ' ')
+            public void Set(char character = ' ')
             {
-                Set(c, Color.White, Color.Black);
+                Set(character, Color.White, Color.Black);
             }
 
             public char GetCharacter()
             {
-                return this.c;
+                return this.character;
             }
             public Color GetColor()
             {
@@ -184,7 +182,7 @@ namespace ConsoleEngine
 
             public override string ToString()
             {
-                return $"Pixel[char: {c}, textColor: {textColor}, bColor: {backgroundColor}]";
+                return $"Pixel[char: {character}, textColor: {textColor}, bColor: {backgroundColor}]";
             }
 
             public override bool Equals(object obj)
@@ -192,7 +190,7 @@ namespace ConsoleEngine
                 if (obj is Pixel p)
                 {
                     return
-                        this.c.Equals(p.c) &&
+                        this.character.Equals(p.character) &&
                         this.textColor.Equals(p.textColor) &&
                         this.backgroundColor.Equals(p.backgroundColor);
                 }
