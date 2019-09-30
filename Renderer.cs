@@ -22,7 +22,7 @@ namespace ConsoleEngine
         /// <summary>
         /// Initializes the Renderer by creating the Window Buffer, setting the window Width, Height and Title and Show/Hide the Cursor.
         /// </summary>
-        public static void Init(int width, int height, bool showCursor, string title)
+        public static void Init(int width, int height, string title)
         {
             if (hasAlreadyBeenInit)
                 throw new Exception("[Warning] Renderer has already been Initialized");
@@ -33,7 +33,7 @@ namespace ConsoleEngine
             drawnBuffer = new Pixel[WINDOW_WIDTH * WINDOW_HEIGHT];
 
             Console.SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-            Console.CursorVisible = showCursor;
+            Console.CursorVisible = false;
 
             for (int i = 0; i < windowBuffer.Length; i++)
             {
@@ -58,13 +58,13 @@ namespace ConsoleEngine
         /// <summary>
         /// Puts the character into the window buffer at the selected position
         /// </summary>
-        public static void Put(char text, Vector2 pos, ConsoleColor color = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
+        public static void Put(char character, Vector2 pos, ConsoleColor color = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
             if (pos.x < 0 || pos.x >= WINDOW_WIDTH || pos.y < 0 || pos.y >= WINDOW_HEIGHT)
                 return;
 
             int a = Utils.GetArrayPosition(pos, WINDOW_WIDTH);
-            windowBuffer[a].Set(text, color, backgroundColor);
+            windowBuffer[a].Set(character, color, backgroundColor);
         }
 
         /// <summary>
@@ -119,32 +119,32 @@ namespace ConsoleEngine
         private class Pixel
         {
             char c;
-            ConsoleColor color;
+            ConsoleColor textColor;
             ConsoleColor backgroundColor;
 
             public Pixel()
             {
                 this.c = ' ';
-                this.color = ConsoleColor.White;
+                this.textColor = ConsoleColor.White;
                 this.backgroundColor = ConsoleColor.Black;
             }
-            public Pixel(char c, ConsoleColor color, ConsoleColor backgroundColor)
+            public Pixel(char c, ConsoleColor textColor, ConsoleColor backgroundColor)
             {
                 this.c = c;
-                this.color = color;
+                this.textColor = textColor;
                 this.backgroundColor = backgroundColor;
             }
 
             /// <summary>
-            /// Sets the pixel to the passed arguments, passing no arguments will reset the Pixel to nothing, black background and white text
+            /// Sets the pixel to the passed arguments, passing no arguments will reset the Pixel to nothing, black background and white character
             /// </summary>
             /// <param name="c"></param>
-            /// <param name="color"></param>
+            /// <param name="textColor"></param>
             /// <param name="backgroundColor"></param>
-            public void Set(char c = ' ', ConsoleColor color = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
+            public void Set(char c = ' ', ConsoleColor textColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
             {
                 this.c = c;
-                this.color = color;
+                this.textColor = textColor;
                 this.backgroundColor = backgroundColor;
             }
 
@@ -154,7 +154,7 @@ namespace ConsoleEngine
             }
             public ConsoleColor GetColor()
             {
-                return this.color;
+                return this.textColor;
             }
             public ConsoleColor GetBackgroundColor()
             {
@@ -163,7 +163,7 @@ namespace ConsoleEngine
 
             public override string ToString()
             {
-                return String.Format("Pixel[char: {0}, color: {1}, bColor: {2}]", c, color, backgroundColor);
+                return String.Format("Pixel[char: {0}, textColor: {1}, backgrounColor: {2}]", c, textColor, backgroundColor);
             }
 
             public override bool Equals(object obj)
@@ -173,7 +173,7 @@ namespace ConsoleEngine
                     Pixel p = (Pixel)obj;
                     return
                         this.c.Equals(p.c) &&
-                        this.color.Equals(p.color) &&
+                        this.textColor.Equals(p.textColor) &&
                         this.backgroundColor.Equals(p.backgroundColor);
                 }
                 return false;

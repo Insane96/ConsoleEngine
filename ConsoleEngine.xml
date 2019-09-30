@@ -199,7 +199,7 @@
         </member>
         <member name="M:ConsoleEngine.Renderer.Pixel.Set(System.Char,System.ConsoleColor,System.ConsoleColor)">
             <summary>
-            Sets the pixel to the passed arguments, passing no arguments will reset the Pixel to nothing, black background and white text
+            Sets the pixel to the passed arguments, passing no arguments will reset the Pixel to nothing, black background and white character
             </summary>
             <param name="c"></param>
             <param name="color"></param>

@@ -19,9 +19,9 @@ namespace ConsoleEngine
         /// Initializes the Renderer by creating the Window Buffer, setting the window Width, Height and Title and Show/Hide the Cursor.
         /// 
         /// </summary>
-        public static void Init(int width, int height, bool showCursor = true, string title = "")
+        public static void Init(int width, int height, string title = "")
         {
-            Renderer.Init(width, height, showCursor, title);
+            Renderer.Init(width, height, title);
             gameObjects = new List<GameObject>();
         }
 
