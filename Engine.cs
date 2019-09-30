@@ -19,9 +19,9 @@ namespace ConsoleEngine
         /// Initializes the Renderer by creating the Window Buffer, setting the window Width, Height and Title and Show/Hide the Cursor.
         /// 
         /// </summary>
-        public static void Init(int width, int height, string title = "")
+        public static void Init(int width, int height, bool showCursor = true, string title = "")
         {
-            Renderer.Init(width, height, title);
+            Renderer.Init(width, height, showCursor, title);
             gameObjects = new List<GameObject>();
         }
 
@@ -75,7 +75,7 @@ namespace ConsoleEngine
         private static List<GameObject> queuedGameObjects = new List<GameObject>();
 
         /// <summary>
-        /// Adds a GameObject to the list of GameObjects to update and draw. Names must be unique
+        /// Adds a GameObject to the list of GameObjects to update and draw. Names must be univocal
         /// </summary>
         /// <param name="gameObject"></param>
         public static void AddGameObject(GameObject gameObject)

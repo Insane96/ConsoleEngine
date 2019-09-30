@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Windows.Input;
+using OpenTK.Input;
 
 namespace ConsoleEngine
 {
@@ -11,7 +11,7 @@ namespace ConsoleEngine
         /// </summary>
         public static bool IsKeyPressed(Key key)
         {
-            return Keyboard.IsKeyDown(key);
+            return Keyboard.GetState().IsKeyDown(key);
         }
     }
 }
