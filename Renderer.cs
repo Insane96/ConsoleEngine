@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
-using Console = Colorful.Console;
 
 namespace ConsoleEngine
 {
@@ -45,26 +43,18 @@ namespace ConsoleEngine
         /// <summary>
         /// Puts the string into the window buffer by cycling every character at the selected position
         /// </summary>
-        public static void Put(string text, Vector2 pos, Color color, Color backgroundColor)
+        public static void Put(string text, Vector2 pos, ConsoleColor color = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
             for (int i = 0; i < text.Length; i++)
             {
                 Put(text[i], Utils.GetMatrixPosition(Utils.GetArrayPosition(pos, WINDOW_WIDTH) + i, WINDOW_WIDTH), color, backgroundColor);
             }
         }
-        public static void Put(string text, Vector2 pos, Color color, ConsoleColor backgroundColor)
-        {
-            Put(text, pos, color, Color.Black);
-        }
-        public static void Put(string text, Vector2 pos)
-        {
-            Put(text, pos, Color.White, Color.Black);
-        }
 
         /// <summary>
         /// Puts the character into the window buffer at the selected position
         /// </summary>
-        public static void Put(char character, Vector2 pos, Color color, Color backgroundColor)
+        public static void Put(char character, Vector2 pos, ConsoleColor color, ConsoleColor backgroundColor)
         {
             if (pos.x < 0 || pos.x >= WINDOW_WIDTH || pos.y < 0 || pos.y >= WINDOW_HEIGHT)
                 return;
@@ -72,13 +62,13 @@ namespace ConsoleEngine
             int a = Utils.GetArrayPosition(pos, WINDOW_WIDTH);
             windowBuffer[a].Set(character, color, backgroundColor);
         }
-        public static void Put(char character, Vector2 pos, Color color)
+        public static void Put(char character, Vector2 pos, ConsoleColor color)
         {
-            Put(character, pos, color, Color.Black);
+            Put(character, pos, color, ConsoleColor.Black);
         }
         public static void Put(char character, Vector2 pos)
         {
-            Put(character, pos, Color.White, Color.Black);
+            Put(character, pos, ConsoleColor.White, ConsoleColor.Black);
         }
 
         /// <summary>
@@ -133,16 +123,16 @@ namespace ConsoleEngine
         private class Pixel
         {
             char character;
-            Color textColor;
-            Color backgroundColor;
+            ConsoleColor textColor;
+            ConsoleColor backgroundColor;
 
             public Pixel()
             {
                 this.character = ' ';
-                this.textColor = Color.White;
-                this.backgroundColor = Color.Black;
+                this.textColor = ConsoleColor.White;
+                this.backgroundColor = ConsoleColor.Black;
             }
-            public Pixel(char character, Color textColor, Color backgroundColor)
+            public Pixel(char character, ConsoleColor textColor, ConsoleColor backgroundColor)
             {
                 this.character = character;
                 this.textColor = textColor;
@@ -152,30 +142,22 @@ namespace ConsoleEngine
             /// <summary>
             /// Sets the pixel to the passed arguments, passing no arguments will reset the Pixel to nothing, black background and white character
             /// </summary>
-            public void Set(char character, Color textColor, Color backgroundColor)
+            public void Set(char character = ' ', ConsoleColor textColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
             {
                 this.character = character;
                 this.textColor = textColor;
                 this.backgroundColor = backgroundColor;
-            }
-            public void Set(char character, Color textColor)
-            {
-                Set(character, textColor, Color.Black);
-            }
-            public void Set(char character = ' ')
-            {
-                Set(character, Color.White, Color.Black);
             }
 
             public char GetCharacter()
             {
                 return this.character;
             }
-            public Color GetColor()
+            public ConsoleColor GetColor()
             {
                 return this.textColor;
             }
-            public Color GetBackgroundColor()
+            public ConsoleColor GetBackgroundColor()
             {
                 return this.backgroundColor;
             }
